@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable react/prop-types */
 /* eslint-disable arrow-body-style */
 /* eslint-disable arrow-spacing */
@@ -8,7 +9,6 @@ const ApiBaseUrl = 'https://api.scryfall.com/cards/search?order=cmc&q=';
 
 const TableData = ({ data }) => {
   const [cards, setCards] = useState([]);
-
 
   useEffect(() => {
     const fetchMyAPI = async () => {
@@ -57,7 +57,7 @@ const TableData = ({ data }) => {
               const { commander } = legalities || '';
               const { usd } = prices || '';
               return (
-                <tr>
+                <tr key={card.oracle_id}>
                   <td>{card.name}</td>
                   <td>{imgUrl}</td>
                   <td>{card.uri}</td>
