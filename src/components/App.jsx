@@ -1,6 +1,6 @@
 import React from 'react';
 import TableData from './TableData';
-import data from '../data/ezuri.json';
+import data from '../data/locustGod2.json';
 
 
 function App() {

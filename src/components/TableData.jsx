@@ -12,38 +12,67 @@ const TableData = ({ data }) => {
 
   useEffect(() => {
     const fetchMyAPI = async () => {
-      const cardsArray = [];
-
       data.forEach(async (element) => {
         const cardData = await getData(`${ApiBaseUrl}${element.Name}`);
-        cardsArray.push(cardData);
+        setCards((cards)=>{
+          const list = [
+            ...cards,
+            cardData.data[0],
+          ];
+          console.log(cardData.data[0]);
+          return list;
+        });
+        // cardsArray.push(cardData.data[0]);
       });
-
-      await setCards(cardsArray);
     };
+
     fetchMyAPI();
-  }, []);
+  }, [data]);
 
 
-  console.log(cards);
   return (
     (
       <table>
         <thead>
-          <tr>
+          <tr style={{ background: 'lightblue', fontWeight: 'bold', textAlign: 'center' }}>
             <td>Card Name</td>
+            <td>Img url</td>
+            <td>Card Uri</td>
+            <td>Legal in commander</td>
+            <td>Rarity</td>
+            <td>USD</td>
+            <td>Oracle Text</td>
+            <td>Mana Cost</td>
+            <td>Type Line</td>
+            <td>Power</td>
+            <td>Toughness</td>
+            <td>Rarity</td>
           </tr>
         </thead>
         <tbody>
           {
-            cards.map((card)=> (
-              <tr>
-                <td>
-                  Helo
-                  {card.data[0].name}
-                </td>
-              </tr>
-            ))
+            cards.map((card)=> {
+              const { image_uris, legalities, prices } = card;
+              const { large: imgUrl } = image_uris || '';
+              const { commander } = legalities || '';
+              const { usd } = prices || '';
+              return (
+                <tr>
+                  <td>{card.name}</td>
+                  <td>{imgUrl}</td>
+                  <td>{card.uri}</td>
+                  <td>{commander}</td>
+                  <td>{card.rarity}</td>
+                  <td>{usd}</td>
+                  <td>{card.oracle_text}</td>
+                  <td>{card.mana_cost}</td>
+                  <td>{card.type_line}</td>
+                  <td>{card.power}</td>
+                  <td>{card.toughness}</td>
+                  <td>{card.rarity}</td>
+                </tr>
+              );
+            })
           }
         </tbody>
       </table>
